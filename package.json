@@ -1,0 +1,25 @@
+{
+  "name": "react-native-launch-optimum",
+  "version": "1.0.0",
+  "description": "优化react-native 启动白屏",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a289459798/react-native-launch-optimum.git"
+  },
+  "keywords": [
+    "react-native",
+    "android",
+    "launch",
+    "白屏"
+  ],
+  "author": "zhangzy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a289459798/react-native-launch-optimum/issues"
+  },
+  "homepage": "https://github.com/a289459798/react-native-launch-optimum#readme"
+}
