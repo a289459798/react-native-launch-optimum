@@ -36,14 +36,32 @@ compile project(':react-native-launch-optimum')
 
 ```
 public class MainActivity extends ZReactActivity {
-...
+    ...// 其他代码
+ 
+     // 启动显示的页面
+     @Override
+     public int getLayout() {
+         return R.layout.loading;
+     }
+ 
+     // 启动页显示时间
+     @Override
+     public int getWaitTime() {
+         return 3;
+     }
+ 
+     // 引导页面
+     @Override
+     public Class<? extends Activity> getGuideActivity() {
+ 
+         int versionCode = DeviceHelper.getVersionCode(this);
+         int preVersionCode = this.getSharedPreferences("config", Activity.MODE_PRIVATE).getInt("versionCode", 0);
+         if (preVersionCode < versionCode) {
+ 
+             return GuideActivity.class;
+         }
+         return null;
+     }
+
 }
 ```
-
-在启动页增加如下代码
-
-```java
-RNCacheViewManager.init(this, component_name, ((ViewGroup) findViewById(android.R.id.content)));
-```
-
-component_name 为 MainActivity设置的component_name

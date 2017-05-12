@@ -19,6 +19,9 @@ public class RNCacheViewManager {
 
     public static ReactRootView getmRootView() {
 
+        if (mRootView == null) {
+            return null;
+        }
         ViewParent viewParent = mRootView.getParent();
         if (viewParent != null) {
             ViewGroup vp = (ViewGroup) viewParent;
@@ -48,7 +51,7 @@ public class RNCacheViewManager {
         try {
             ViewParent parent = getmRootView().getParent();
             if (parent != null)
-                ((android.view.ViewGroup) parent).removeView(getmRootView());
+                ((ViewGroup) parent).removeView(getmRootView());
         } catch (Throwable e) {
             e.printStackTrace();
         }

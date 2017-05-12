@@ -6,10 +6,13 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 package com.zhangzy.ReactLaunch;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
+import android.view.ViewGroup;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
@@ -48,10 +51,41 @@ public abstract class ZReactActivity extends Activity implements DefaultHardware
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDelegate.onCreate(savedInstanceState);
+
+        setContentView(this.getLayout());
+
+        final Activity context = this;
+        RNCacheViewManager.init(context, getMainComponentName(), ((ViewGroup) findViewById(android.R.id.content)));
+
+        if (getGuideActivity() != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (getGuideActivity() != null) {
+                        Intent intent = new Intent();
+                        intent.setClass(context, getGuideActivity());
+                        startActivity(intent);
+                    }
+                }
+            }, getWaitTime() * 1000 - 100);
+        }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                mDelegate.onCreate(savedInstanceState);
+            }
+        }, getWaitTime() * 1000);
     }
+
+    abstract public int getLayout();
+
+    abstract public int getWaitTime();
+
+    abstract public Class<? extends Activity> getGuideActivity();
 
     @Override
     protected void onPause() {
