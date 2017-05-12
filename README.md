@@ -69,7 +69,7 @@ public class MainActivity extends ZReactActivity {
 
 ## ios
 
-ios 优化很简单，其实react-native 在ios上的表现比android 要好很多，如果需要优化，可以在 `applagate.m`中加以下代码
+ios 优化很简单，其实react-native 在ios上的表现比android 要好很多，如果需要优化，可以在 `AppDelegate.m`中加以下代码
 
 ```oc
 
