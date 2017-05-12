@@ -65,3 +65,56 @@ public class MainActivity extends ZReactActivity {
 
 }
 ```
+
+
+## ios
+
+ios 优化很简单，其实react-native 在ios上的表现比android 要好很多，如果需要优化，可以在 `applagate.m`中加以下代码
+
+```oc
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  
+  ...
+  self.window.rootViewController = rootViewController;
+  [self lanuchOptimum];
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+
+- (void) lanuchOptimum {
+  
+  CGSize viewSize = self.window.bounds.size;
+  // 横屏修改这个值
+  NSString *viewOrientation = @"Portrait";
+
+  NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
+  for (NSDictionary* dict in imagesDict) {
+    CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
+    if (CGSizeEqualToSize(imageSize, viewSize) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]]) {
+      
+      NSString *lanuchImage = dict[@"UILaunchImageName"];
+  
+      UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:lanuchImage]];
+      launchView.frame = self.window.bounds;
+      launchView.contentMode = UIViewContentModeScaleAspectFill;
+      [self.window.rootViewController.view addSubview:launchView];
+      [self.window.rootViewController.view bringSubviewToFront:launchView];
+      
+      // 延时显示1秒钟
+      [UIView animateWithDuration:1.0f delay:1.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        
+        // 增加隐藏时候的动画
+        launchView.alpha = 0.0f;
+        launchView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.2, 1.2, 1);
+        
+      } completion:^(BOOL finished) {
+        [launchView removeFromSuperview];
+      }];
+    
+      break;
+    }
+  }
+}
+```
