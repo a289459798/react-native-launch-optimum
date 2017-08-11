@@ -157,6 +157,9 @@ public class ZReactActivityDelegate {
                 getReactNativeHost().getReactInstanceManager().showDevOptionsDialog();
                 return true;
             }
+            if(mDoubleTapReloadRecognizer == null) {
+                return false;
+            }
             boolean didDoubleTapR = Assertions.assertNotNull(mDoubleTapReloadRecognizer)
                 .didDoubleTapR(keyCode, getPlainActivity().getCurrentFocus());
             if (didDoubleTapR) {
