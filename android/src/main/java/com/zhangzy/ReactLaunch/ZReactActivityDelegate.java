@@ -94,7 +94,7 @@ public class ZReactActivityDelegate {
     }
 
     protected void onCreate(Bundle savedInstanceState) {
-        if (true && Build.VERSION.SDK_INT >= 23) {
+        if (getReactNativeHost().getUseDeveloperSupport() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Get permission to show redbox in dev builds.
             if (!Settings.canDrawOverlays(getContext())) {
                 Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
